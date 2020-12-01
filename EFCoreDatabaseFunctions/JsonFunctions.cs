@@ -36,13 +36,14 @@ namespace AuditSourcesSample
                 );
             builder
             .HasDbFunction(jsonvalueMethodInfo)
-            .HasTranslation(args =>
-                SqlFunctionExpression.Create("JSON_VALUE",
-                    args,
-                    typeof(string), null
-                )
+            .HasTranslation(args => new SqlFunctionExpression(
+                "JSON_VALUE",
+                args,
+                true,
+                args.Select(x => true),
+                typeof(string),
+                null)
             );
-
             return builder;
         }
     }
